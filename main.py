@@ -10,15 +10,15 @@ from langchain.document_loaders import PyPDFLoader
 from langchain.vectorstores import Chroma
 from langchain.embeddings import OpenAIEmbeddings
 import shutil
-os.environ['OPENAI_API_KEY'] = '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'
-
+#os.environ['OPENAI_API_KEY'] = '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'
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 llm = OpenAI(temperature=0.4)
 from langchain.agents.agent_toolkits import (
     create_vectorstore_agent,
     VectorStoreToolkit,
     VectorStoreInfo
 )
-embeddings = OpenAIEmbeddings(openai_api_key='OPENAI_API_KEY')
+embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY )
 
 @app.get("/")
 def read_root():
