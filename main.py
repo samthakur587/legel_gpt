@@ -3,20 +3,22 @@ from fastapi.responses import HTMLResponse
 app = FastAPI()
 import uvicorn
 import os
+import openai
 from langchain.llms import OpenAI
 import PyPDF2
 from langchain.document_loaders import PyPDFLoader
 from langchain.vectorstores import Chroma
 from langchain.embeddings import OpenAIEmbeddings
 import shutil
-os.environ['OPENAI_API_KEY'] = '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'
+openai.api_key = os.getenv("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")
+#os.environ['OPENAI_API_KEY'] = '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'
 llm = OpenAI(temperature=0.4)
 from langchain.agents.agent_toolkits import (
     create_vectorstore_agent,
     VectorStoreToolkit,
     VectorStoreInfo
 )
-embeddings = OpenAIEmbeddings()
+embeddings = OpenAIEmbeddings(openai_api_key=openai.api_key)
 
 @app.get("/")
 def read_root():
