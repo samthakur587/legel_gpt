@@ -18,7 +18,7 @@ from langchain.agents.agent_toolkits import (
     VectorStoreToolkit,
     VectorStoreInfo
 )
-embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key))
+embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
 
 @app.get("/")
 def read_root():
