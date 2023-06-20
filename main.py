@@ -2,30 +2,24 @@ from fastapi import FastAPI
 app = FastAPI()
 import uvicorn
 import os
-<<<<<<< HEAD
+
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.document_loaders import TextLoader
-=======
 import openai
 >>>>>>> 68e737ab2c3d13e0c1dfb025935e32284836ff97
 from langchain.llms import OpenAI
 from langchain.vectorstores import Chroma
 from langchain.embeddings import OpenAIEmbeddings
 import shutil
-<<<<<<< HEAD
-=======
-#os.environ['OPENAI_API_KEY'] = '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'
+
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
->>>>>>> 68e737ab2c3d13e0c1dfb025935e32284836ff97
 llm = OpenAI(temperature=0.4)
 from langchain.agents.agent_toolkits import (
     create_vectorstore_agent,
     VectorStoreToolkit,
     VectorStoreInfo
 )
-<<<<<<< HEAD
-embeddings = OpenAIEmbeddings()
-=======
+
 embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY )
 
 @app.get("/")
@@ -43,8 +37,6 @@ def read_root():
         </html>
         """
     )
-path = ''
->>>>>>> 68e737ab2c3d13e0c1dfb025935e32284836ff97
 if not os.path.exists('uploads'):
     dir = os.mkdir('uploads')
 @app.get("/")
