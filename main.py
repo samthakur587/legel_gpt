@@ -23,19 +23,7 @@ embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY )
 
 @app.get("/")
 def read_root():
-    return HTMLResponse(
-        """
-        <html>
-            <body>
-                <h1>Upload a PDF file</h1>
-                <form action="/upload" enctype="multipart/form-data" method="post">
-                    <input type="file" name="file" accept=".pdf">
-                    <input type="submit">
-                </form>
-            </body>
-        </html>
-        """
-    )
+    return {'message':'welcome to legel gpt'}
 if not os.path.exists('uploads'):
     dir = os.mkdir('uploads')
 @app.get("/")
