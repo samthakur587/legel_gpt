@@ -6,7 +6,6 @@ import os
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.document_loaders import TextLoader
 import openai
->>>>>>> 68e737ab2c3d13e0c1dfb025935e32284836ff97
 from langchain.llms import OpenAI
 from langchain.vectorstores import Chroma
 from langchain.embeddings import OpenAIEmbeddings
