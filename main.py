@@ -43,7 +43,7 @@ async def input_text(data: TextData):
         
         loader = TextLoader('uploads/text.txt')
         documents = loader.load()
-        text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+        text_splitter = CharacterTextSplitter(chunk_size=700, chunk_overlap=0)
         docs = text_splitter.split_documents(documents)
         store = Chroma.from_documents(docs, embeddings, collection_name='legal_case_files')
         vectorstore_info = VectorStoreInfo(
@@ -56,35 +56,35 @@ async def input_text(data: TextData):
             llm=llm,
             toolkit=toolkit,
             verbose=True)
-        app.state.agent = agent_executor
+        agent = agent_executor
         return {'message':'uploaded seccessfully'}
     except Exception as e:
         return {'message': 'Upload failed', 'error': str(e)}
 
 
-# def run():
-#     loader = TextLoader('uploads/text.txt')
-#     documents = loader.load()
-#     text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-#     docs = text_splitter.split_documents(documents)
-#     store = Chroma.from_documents(docs, embeddings, collection_name='legal_case_files')
-#     vectorstore_info = VectorStoreInfo(
-#     name="legal_case_files",
-#     description="Gpt on Legal Case Files",
-#     vectorstore=store)
-#     toolkit = VectorStoreToolkit(vectorstore_info=vectorstore_info)
+def run():
+    loader = TextLoader('uploads/text.txt')
+    documents = loader.load()
+    text_splitter = CharacterTextSplitter(chunk_size=700, chunk_overlap=0)
+    docs = text_splitter.split_documents(documents)
+    store = Chroma.from_documents(docs, embeddings, collection_name='legal_case_files')
+    vectorstore_info = VectorStoreInfo(
+    name="legal_case_files",
+    description="Gpt on Legal Case Files",
+    vectorstore=store)
+    toolkit = VectorStoreToolkit(vectorstore_info=vectorstore_info)
 
-#     agent_executor = create_vectorstore_agent(
-#             llm=llm,
-#             toolkit=toolkit,
-#             verbose=True)
-#     return agent_executor
+    agent_executor = create_vectorstore_agent(
+            llm=llm,
+            toolkit=toolkit,
+            verbose=True)
+    return agent_executor
 @app.post("/ask_qa")
 async def ask( data: TextData):
     try:
         if len(os.listdir('uploads')) !=0:
             # agent = run()
-            agent = app.state.agent
+            agent = run()
             response = agent.run(data.text)
             return {'message': 'Question answered', 'id': data.id, 'answer': response}
         else: 
