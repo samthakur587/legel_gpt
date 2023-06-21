@@ -43,18 +43,13 @@ async def input_text(data: TextData):
         
         loader = TextLoader('uploads/text.txt')
         documents = loader.load()
-        text_splitter = CharacterTextSplitter.from_tiktoken_encoder(
-    chunk_size=500, chunk_overlap=0
-)
-        docs = text_splitter.split_text(documents)
+        text_splitter = CharacterTextSplitter(chunk_size=700, chunk_overlap=0)
+        docs = text_splitter.split_documents(documents)
         store = Chroma.from_documents(docs, embeddings, collection_name='legal_case_files')
-
         vectorstore_info = VectorStoreInfo(
         name="legal_case_files",
         description="Gpt on Legal Case Files",
         vectorstore=store)
-
-
         toolkit = VectorStoreToolkit(vectorstore_info=vectorstore_info)
     
         agent_executor = create_vectorstore_agent(
@@ -88,8 +83,8 @@ async def input_text(data: TextData):
 async def ask( data: TextData):
     try:
         if len(os.listdir('uploads')) !=0:
-            # agent = run()
             agent = app.state.agent
+            # agent = run()
             response = agent.run(data.text)
             return {'message': 'Question answered', 'id': data.id, 'answer': response}
         else: 
