@@ -38,7 +38,7 @@ def read_root():
 @app.post("/upload_text")
 async def input_text(data: TextData):
     try:
-        with open(f'uploads/{data.id}.txt', 'w') as f:
+        with open(f'uploads/text.txt', 'w') as f:
             f.write(data.text)
         
         loader = TextLoader('uploads/text.txt')
