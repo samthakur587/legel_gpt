@@ -39,13 +39,16 @@ def read_root():
 async def input_text(data: TextData):
     try:
         with open(f'uploads/text.txt', 'w') as f:
-            f.write(data.text)
+            f.write(data.text) #Storing the file
         
-        loader = TextLoader('uploads/text.txt')
-        documents = loader.load()
-        text_splitter = CharacterTextSplitter(chunk_size=700, chunk_overlap=0)
-        docs = text_splitter.split_documents(documents)
-        store = Chroma.from_documents(docs, embeddings, collection_name='legal_case_files')
+        # loader = TextLoader('uploads/text.txt')
+        # documents = loader.load()
+        text_splitter = CharacterTextSplitter.from_tiktoken_encoder( #Instatntiate splitter
+    chunk_size=500, chunk_overlap=0
+)
+        texts = text_splitter.split_text(data.text)# split
+
+        store = Chroma.from_texts(texts, embeddings, collection_name='legal_case_files')#store
         vectorstore_info = VectorStoreInfo(
         name="legal_case_files",
         description="Gpt on Legal Case Files",
