@@ -46,7 +46,7 @@ async def input_text(data: TextData):
         text_splitter = CharacterTextSplitter.from_tiktoken_encoder(
     chunk_size=500, chunk_overlap=0
 )
-        docs = text_splitter.split_text(data.text)
+        docs = text_splitter.split_text(documents)
         store = Chroma.from_documents(docs, embeddings, collection_name='legal_case_files')
 
         vectorstore_info = VectorStoreInfo(
