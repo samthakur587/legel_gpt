@@ -44,7 +44,7 @@ async def input_text(data: TextData):
         # loader = TextLoader('uploads/text.txt')
         # documents = loader.load()
         text_splitter = CharacterTextSplitter.from_tiktoken_encoder( #Instatntiate splitter
-    chunk_size=500, chunk_overlap=0
+    chunk_size=300, chunk_overlap=0
 )
         texts = text_splitter.split_text(data.text)# split
 
